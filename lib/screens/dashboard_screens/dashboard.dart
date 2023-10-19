@@ -2,6 +2,7 @@
 import 'package:fb_chat_app/constants/app_colors.dart';
 import 'package:fb_chat_app/constants/custom_widget.dart';
 import 'package:fb_chat_app/constants/my_text_styles.dart';
+import 'package:fb_chat_app/screens/dashboard_screens/contact_screen.dart';
 import 'package:fb_chat_app/screens/detail_screens/chat_detail_screen.dart';
 import 'package:flutter/material.dart';
 //endregion
@@ -19,9 +20,14 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   //region VariableDeclarations
   var txtSearchController = TextEditingController();
-  bool isRead = false;
+  bool isRead = true;
 
   //endregion
+
+  //PrivateMethod
+  void gotoNextScreen() {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const ContactScreen()));
+  }
 
   //region BuildMethod
   @override
@@ -94,7 +100,8 @@ class _DashboardState extends State<Dashboard> {
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
                                   style: mTextStyle16(
-                                      mFontColor: ColorConstant.mattBlackColor,
+                                      mFontColor:
+                                          ColorConstant.mattBlackColor,
                                       mWeight: isRead
                                           ? FontWeight.w500
                                           : FontWeight.bold),
@@ -102,9 +109,10 @@ class _DashboardState extends State<Dashboard> {
                               ),
                               Text(
                                 "12:30 PM",
-                                style: mTextStyle16(
-                                    mFontColor:
-                                        isRead ? Colors.blueGrey : Colors.green,
+                                style: mTextStyle12(
+                                    mFontColor: isRead
+                                        ? Colors.blueGrey
+                                        : ColorConstant.fontTitleBlackColor,
                                     mWeight: isRead
                                         ? FontWeight.w500
                                         : FontWeight.bold),
@@ -131,12 +139,12 @@ class _DashboardState extends State<Dashboard> {
                               isRead
                                   ? Container()
                                   : CircleAvatar(
-                                      backgroundColor: Colors.green,
+                                      backgroundColor: ColorConstant.gradientDarkColor,
                                       radius: 10,
                                       child: Text(
                                         "2",
                                         style: mTextStyle12(
-                                            mFontColor: Colors.white),
+                                            mFontColor:ColorConstant.tabSelectedColor),
                                       ),
                                     )
                             ],
@@ -150,15 +158,17 @@ class _DashboardState extends State<Dashboard> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        shape: CircleBorder(),
+        shape: const CircleBorder(),
         elevation: 10,
-        backgroundColor: Colors.purple.shade900,
-        onPressed: () {},
+        backgroundColor: ColorConstant.tabSelectedColor,
+        onPressed: () {
+          gotoNextScreen();
+        },
         child: Image.asset(
           "assets/icons/ic_add_chat.png",
-          width: 24,
-          height: 24,
-          color: Colors.white,
+          width: 30,
+          height: 30,
+          color: ColorConstant.gradientDarkColor,
         ),
       ),
     );

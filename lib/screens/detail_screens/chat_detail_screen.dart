@@ -44,7 +44,15 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
             padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
             child: Column(
               children: [
-                SizedBox(
+                Container(
+                  decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                        ColorConstant.gradientDarkColor,
+                        ColorConstant.gradientLightColor
+                      ])),
                   height: 80,
                   width: double.infinity,
                   child: Padding(
@@ -59,25 +67,27 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                             icon: const Icon(
                               Icons.arrow_back_ios,
                               size: 22,
+                              color: ColorConstant.tabSelectedColor,
                             )),
                         CircleAvatar(
-                          radius: 25,
+                          radius: 20,
                           child: Image.asset(
                             "assets/icons/ic_profile.png",
-                            height: 25,
-                            width: 25,
+                            height: 30,
+                            width: 30,
                           ),
                         ),
                         wSpacer(mWidth: 5),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               "Supriya Arora",
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: mTextStyle12(
-                                  mFontColor: ColorConstant.mattBlackColor,
+                                  mFontColor: ColorConstant.tabSelectedColor,
                                   mWeight: FontWeight.bold),
                             ),
                             Text(
@@ -85,8 +95,8 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                               maxLines: 1,
                               style: mTextStyle12(
                                   mFontColor: strOnlineStatus == "Online"
-                                      ? Colors.lightGreen
-                                      : ColorConstant.mattBlackColor,
+                                      ? ColorConstant.tabSelectedColor
+                                      : ColorConstant.fontTitleBlackColor,
                                   mWeight: FontWeight.bold),
                             ),
                           ],
@@ -97,12 +107,14 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                             icon: const Icon(
                               Icons.video_call,
                               size: 22,
+                              color: ColorConstant.tabSelectedColor,
                             )),
                         IconButton(
                             onPressed: () {},
                             icon: const Icon(
                               Icons.call,
                               size: 22,
+                              color: ColorConstant.tabSelectedColor,
                             ))
                       ],
                     ),
@@ -132,52 +144,64 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                                   }
                                 },
                                 decoration: InputDecoration(
-                                    isDense: true,
-                                    contentPadding: const EdgeInsets.symmetric(
-                                        vertical: 10, horizontal: 10),
-                                    hintText: "Type Message",
-                                    filled: true,
-                                    fillColor: Colors.blueGrey.shade50,
-                                    prefixIcon: IconButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          FocusScope.of(context).unfocus();
-                                          isShowEmoji = !isShowEmoji;
-                                        });
-                                      },
-                                      icon: Image.asset(
-                                        "assets/icons/ic_smile.png",
-                                        width: 24,
-                                        height: 24,
-                                        color: Colors.purple.shade900,
+                                  isDense: true,
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 10),
+                                  hintText: "Type Message",
+                                  filled: true,
+                                  fillColor: Colors.blueGrey.shade50,
+                                  prefixIcon: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        FocusScope.of(context).unfocus();
+                                        isShowEmoji = !isShowEmoji;
+                                      });
+                                    },
+                                    icon: Image.asset(
+                                      "assets/icons/ic_smile.png",
+                                      width: 24,
+                                      height: 24,
+                                      color: ColorConstant.gradientDarkColor,
+                                    ),
+                                  ),
+                                  suffixIcon: Visibility(
+                                    visible: isWrapWidgetVisible,
+                                    child: Wrap(children: [
+                                      IconButton(
+                                        onPressed: () {},
+                                        icon: Image.asset(
+                                          "assets/icons/ic_camera.png",
+                                          width: 24,
+                                          height: 24,
+                                          color:
+                                              ColorConstant.gradientDarkColor,
+                                        ),
                                       ),
-                                    ),
-                                    suffixIcon: Visibility(
-                                      visible: isWrapWidgetVisible,
-                                      child: Wrap(children: [
-                                        IconButton(
-                                          onPressed: () {},
-                                          icon: Image.asset(
-                                            "assets/icons/ic_camera.png",
-                                            width: 24,
-                                            height: 24,
-                                            color: Colors.purple.shade900,
-                                          ),
+                                      IconButton(
+                                        onPressed: () {},
+                                        icon: Image.asset(
+                                          "assets/icons/ic_microphone.png",
+                                          width: 24,
+                                          height: 24,
+                                          color:
+                                              ColorConstant.gradientDarkColor,
                                         ),
-                                        IconButton(
-                                          onPressed: () {},
-                                          icon: Image.asset(
-                                            "assets/icons/ic_microphone.png",
-                                            width: 24,
-                                            height: 24,
-                                            color: Colors.purple.shade900,
-                                          ),
-                                        ),
-                                      ]),
-                                    ),
-                                    border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(30))),
+                                      ),
+                                    ]),
+                                  ),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(30)),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color:
+                                              ColorConstant.gradientDarkColor),
+                                      borderRadius: BorderRadius.circular(30)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color:
+                                              ColorConstant.gradientDarkColor),
+                                      borderRadius: BorderRadius.circular(30)),
+                                ),
                                 onChanged: (value) {
                                   if (value.length > 15) {
                                     setState(() {
@@ -197,18 +221,17 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                             style: ElevatedButton.styleFrom(
                                 // padding: EdgeInsets.zero,
                                 elevation: 5,
-                                backgroundColor: Colors.purple.shade900,
-                                fixedSize: const Size(35, 35),
+                                backgroundColor:
+                                    ColorConstant.gradientDarkColor,
+                                fixedSize: const Size(40, 40),
                                 shape: const CircleBorder()),
                             onPressed: () {},
                             child: Image.asset(
                               "assets/icons/ic_send.png",
-                              width: 24,
-                              height: 24,
-                              color: Colors.white,
+                              width: 30,
+                              height: 30,
+                              color: ColorConstant.tabSelectedColor,
                             )),
-
-                        // Button()
                       ],
                     ),
                   ),
@@ -221,7 +244,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                       textEditingController: txtMessageBox,
                       config: Config(
                         columns: 8,
-                        emojiSizeMax: 32 * (Platform.isIOS ? 1.30 : 1.0),
+                        emojiSizeMax: 30 * (Platform.isIOS ? 1.30 : 1.0),
                       ),
                     ),
                   ),
@@ -234,6 +257,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
   }
 }
 
+//how to call this //Button()
 //region ShowPopOver
 /*class Button extends StatelessWidget {
   const Button({Key? key}) : super(key: key);

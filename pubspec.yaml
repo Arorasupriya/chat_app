@@ -38,6 +38,7 @@ dependencies:
   firebase_core: ^2.16.0
   emoji_picker_flutter: ^1.6.2
   popover: ^0.2.8+2
+  lottie: ^2.6.0
 
 dev_dependencies:
   flutter_test:
@@ -65,6 +66,8 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
+    - assets/animations/
+    - lib/screens/detail_screens/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
