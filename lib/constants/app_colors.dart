@@ -10,8 +10,6 @@ class ColorConstant {
   static const Color fontTitleBlackColor = Colors.black;
   static const Color tabSelectedColor = Colors.white;
 
-
-
   static late Color bgColor;
   static late Color textOnBGColor;
   static late Color secondaryColor;

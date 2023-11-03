@@ -11,6 +11,7 @@ class Assets {
   static const String dashboardScreensCall = 'lib/screens/dashboard_screens/call.dart';
   static const String dashboardScreensContactScreen = 'lib/screens/dashboard_screens/contact_screen.dart';
   static const String dashboardScreensDashboard = 'lib/screens/dashboard_screens/dashboard.dart';
+  static const String dashboardScreensMapScreen = 'lib/screens/dashboard_screens/map_screen.dart';
   static const String dashboardScreensSettingsScreen = 'lib/screens/dashboard_screens/settings_screen.dart';
   static const String dashboardScreensStatusScreen = 'lib/screens/dashboard_screens/status_screen.dart';
   static const String dashboardScreensTabScreen = 'lib/screens/dashboard_screens/tab_screen.dart';
@@ -27,6 +28,7 @@ class Assets {
   static const String iconsIcSend = 'assets/icons/ic_send.png';
   static const String iconsIcSmile = 'assets/icons/ic_smile.png';
   static const String iconsIcStatus = 'assets/icons/ic_status.png';
+  static const String iconsIcUserDefault = 'assets/icons/ic_user_default.png';
   static const String libFirebaseOptions = 'lib/firebase_options.dart';
   static const String libMain = 'lib/main.dart';
   static const String screensSplash = 'lib/screens/splash.dart';

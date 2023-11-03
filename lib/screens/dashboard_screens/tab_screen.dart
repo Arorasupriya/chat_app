@@ -2,11 +2,12 @@ import 'package:fb_chat_app/constants/app_colors.dart';
 import 'package:fb_chat_app/constants/my_text_styles.dart';
 import 'package:fb_chat_app/screens/dashboard_screens/call.dart';
 import 'package:fb_chat_app/screens/dashboard_screens/dashboard.dart';
+import 'package:fb_chat_app/screens/dashboard_screens/map_screen.dart';
 import 'package:fb_chat_app/screens/dashboard_screens/settings_screen.dart';
 import 'package:fb_chat_app/screens/dashboard_screens/status_screen.dart';
 import 'package:flutter/material.dart';
 
-enum Item { itemOne, itemTwo, itemThree }
+enum Item { itemOne, itemTwo, itemThree, four }
 
 class MyTabView extends StatefulWidget {
   const MyTabView({super.key});
@@ -17,10 +18,16 @@ class MyTabView extends StatefulWidget {
 
 class _MyTabViewState extends State<MyTabView> {
   Item? selectedMenu;
-  
-  void gotoNextScreen(){
-    Navigator.push(context, MaterialPageRoute(builder: (context)=> const SettingsScreen()));
+
+  void gotoSettingsScreen() {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => const SettingsScreen()));
   }
+
+  void gotoMapScreen() {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const MapScreen()));
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -60,12 +67,21 @@ class _MyTabViewState extends State<MyTabView> {
                             style: mTextStyle12(),
                           )),
                       PopupMenuItem<Item>(
-                        onTap: (){
-                             gotoNextScreen();
-                        },
+                          onTap: () {
+                            gotoSettingsScreen();
+                          },
                           value: Item.itemThree,
                           child: Text(
                             "Settings",
+                            style: mTextStyle12(),
+                          )),
+                      PopupMenuItem<Item>(
+                        onTap: (){
+                           gotoMapScreen() ;
+                        },
+                          value: Item.four,
+                          child: Text(
+                            "Location",
                             style: mTextStyle12(),
                           )),
                     ])

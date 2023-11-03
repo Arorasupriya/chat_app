@@ -160,7 +160,7 @@ class _DashboardState extends State<Dashboard> {
       floatingActionButton: FloatingActionButton(
         shape: const CircleBorder(),
         elevation: 10,
-        backgroundColor: ColorConstant.tabSelectedColor,
+        backgroundColor: ColorConstant.gradientDarkColor,
         onPressed: () {
           gotoNextScreen();
         },
@@ -168,7 +168,7 @@ class _DashboardState extends State<Dashboard> {
           "assets/icons/ic_add_chat.png",
           width: 30,
           height: 30,
-          color: ColorConstant.gradientDarkColor,
+          color: ColorConstant.tabSelectedColor,
         ),
       ),
     );

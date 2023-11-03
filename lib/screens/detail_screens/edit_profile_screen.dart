@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:fb_chat_app/constants/app_colors.dart';
 import 'package:fb_chat_app/constants/custom_widget.dart';
 import 'package:fb_chat_app/constants/my_text_styles.dart';
@@ -21,16 +23,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   DateTime? birthDate;
   late String birthDateInString;
 
+  //Image Picker
+
+  String pickedImageURL = "";
+
   //Private function
-  setTextFrame(
-    TextEditingController controller,
-    String hint,
-    TextInputType keyboardType,
-    TextInputAction textInputAction,
-  ) {
+  setTextFrame(TextEditingController controller,
+      String hint,
+      TextInputType keyboardType,
+      TextInputAction textInputAction,) {
     return SizedBox(
       height: 50,
       child: TextField(
+        style: mTextStyle12(),
         controller: controller,
         keyboardType: keyboardType,
         textInputAction: textInputAction,
@@ -39,20 +44,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(21),
             borderSide:
-                const BorderSide(color: ColorConstant.gradientDarkColor),
+            const BorderSide(color: ColorConstant.gradientDarkColor),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(21),
             borderSide:
-                const BorderSide(color: ColorConstant.gradientDarkColor),
+            const BorderSide(color: ColorConstant.gradientDarkColor),
           ),
         ),
       ),
     );
   }
 
-  setTextFrameWithIcon(
-      TextEditingController controller,
+  setTextFrameWithIcon(TextEditingController controller,
       String hint,
       TextInputType keyboardType,
       TextInputAction textInputAction,
@@ -60,6 +64,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return SizedBox(
       height: 50,
       child: TextField(
+        readOnly: true,
+        style: mTextStyle12(),
         controller: controller,
         keyboardType: keyboardType,
         textInputAction: textInputAction,
@@ -69,12 +75,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(21),
             borderSide:
-                const BorderSide(color: ColorConstant.gradientDarkColor),
+            const BorderSide(color: ColorConstant.gradientDarkColor),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(21),
             borderSide:
-                const BorderSide(color: ColorConstant.gradientDarkColor),
+            const BorderSide(color: ColorConstant.gradientDarkColor),
           ),
         ),
       ),
@@ -93,7 +99,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
         //Format Date
         birthDateInString =
-            "${birthDate!.month}/${birthDate!.day}/${birthDate!.year}"; // 10/19/2023
+        "${birthDate!.month}/${birthDate!.day}/${birthDate!
+            .year}"; // 10/19/2023
         print("date DOB $birthDateInString ");
         txtUserDOBController.text = birthDateInString;
       });
@@ -103,7 +110,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   //BuildMethod
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    var size = MediaQuery
+        .of(context)
+        .size;
 
     return Scaffold(
       backgroundColor: ColorConstant.gradientDarkColor,
@@ -156,27 +165,29 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           height: size.height * .15,
                           width: size.width * .30,
                           child: Stack(children: [
-                            CircleAvatar(
-                              radius: 50,
-                              child: Image.asset(
-                                "assets/icons/ic_profile.png",
-                                width: 85,
-                                height: 85,
-                                fit: BoxFit.fill,
-                                filterQuality: FilterQuality.high,
+                            Container(
+                              width: 90,
+                              height: 90,
+                              decoration: BoxDecoration(
+                                color: Colors.blue,
+                                shape: BoxShape.circle,
+                                image: pickedImageURL != ""
+                                    ?DecorationImage(image: FileImage(File(pickedImageURL)))
+                                    :const DecorationImage(image: AssetImage("assets/icons/ic_user_default.png"),fit: BoxFit.fill,),
                               ),
                             ),
                             Positioned(
                               right: 2,
-                              bottom: 5,
+                              bottom: 10,
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                     backgroundColor:
-                                        ColorConstant.gradientDarkColor,
+                                    ColorConstant.gradientDarkColor,
                                     padding: EdgeInsets.zero,
                                     fixedSize: const Size(30, 30),
                                     shape: const CircleBorder()),
                                 onPressed: () {
+                                  //open Image Picker
                                   print("tap on camera button");
                                 },
                                 child: const Icon(
@@ -231,7 +242,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             style: ElevatedButton.styleFrom(
                                 fixedSize: const Size(100, 50),
                                 backgroundColor:
-                                    ColorConstant.gradientDarkColor),
+                                ColorConstant.gradientDarkColor),
                             onPressed: () {
                               print("Save all updates");
                             },
