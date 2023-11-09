@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-
 ///How to create custom methods of in build widget properties
 TextStyle mTextStyle12(
-    {FontWeight mWeight = FontWeight.normal, Color mFontColor = Colors.black}) {//  user pass value according to need
+    {FontWeight mWeight = FontWeight.normal, Color mFontColor = Colors.black}) {
+  //  user pass value according to need
   return TextStyle(
     fontSize: 12,
     fontWeight: mWeight,
@@ -11,6 +11,7 @@ TextStyle mTextStyle12(
     fontFamily: "Mulish",
   );
 }
+
 TextStyle mTextStyle16(
     {FontWeight mWeight = FontWeight.normal, Color mFontColor = Colors.black}) {
   return TextStyle(
@@ -20,6 +21,7 @@ TextStyle mTextStyle16(
     fontFamily: "Mulish",
   );
 }
+
 TextStyle mTextStyle25(
     {FontWeight mWeight = FontWeight.normal, Color mFontColor = Colors.black}) {
   return TextStyle(
@@ -29,6 +31,7 @@ TextStyle mTextStyle25(
     fontFamily: "Mulish",
   );
 }
+
 TextStyle mTextStyle34(
     {FontWeight mWeight = FontWeight.normal, Color mFontColor = Colors.black}) {
   return TextStyle(
@@ -38,6 +41,7 @@ TextStyle mTextStyle34(
     fontFamily: "Mulish",
   );
 }
+
 TextStyle mTextStyle43(
     {FontWeight mWeight = FontWeight.normal, Color mFontColor = Colors.black}) {
   return TextStyle(

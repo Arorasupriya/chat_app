@@ -9,8 +9,7 @@ class ContactScreen extends StatefulWidget {
 }
 
 class _ContactScreenState extends State<ContactScreen> {
-  static const platform =
-      MethodChannel('flutter_contacts/launch_contacts');
+  static const platform = MethodChannel('flutter_contacts/launch_contacts');
 
   @override
   Widget build(BuildContext context) {

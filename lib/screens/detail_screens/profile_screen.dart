@@ -38,7 +38,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Text(
                   "Profile",
                   style:
-                  mTextStyle16(mFontColor: ColorConstant.tabSelectedColor),
+                      mTextStyle16(mFontColor: ColorConstant.tabSelectedColor),
                 )
               ],
             ),

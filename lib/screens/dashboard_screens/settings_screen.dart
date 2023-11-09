@@ -16,15 +16,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   List<IconData> listIcons = [Icons.account_box, Icons.chat, Icons.security];
 
-  List<Widget>  listScreens = [const ProfileScreen(),const ChatDetailScreen(),const ProfileScreen()];
+  List<Widget> listScreens = [
+    const ProfileScreen(),
+    const ChatDetailScreen(),
+    const ProfileScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme:const IconThemeData(
-          color: Colors.white
-        ) ,
+        iconTheme: const IconThemeData(color: Colors.white),
         title: Text(
           "Settings",
           style: mTextStyle16(mFontColor: ColorConstant.tabSelectedColor),
@@ -45,8 +47,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
       body: ListView.separated(
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
-            onTap: (){
-             Navigator.push(context, MaterialPageRoute(builder: (context)=> listScreens[index]));
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => listScreens[index]));
             },
             child: ListTile(
               leading: Icon(

@@ -9,7 +9,8 @@ import 'package:flutter/material.dart';
 
 //region DashboardClass
 class Dashboard extends StatefulWidget {
-  const Dashboard({super.key});
+  String? getUserId;
+  Dashboard({super.key, this.getUserId});
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -26,7 +27,8 @@ class _DashboardState extends State<Dashboard> {
 
   //PrivateMethod
   void gotoNextScreen() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => const ContactScreen()));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => const ContactScreen()));
   }
 
   //region BuildMethod
@@ -100,8 +102,7 @@ class _DashboardState extends State<Dashboard> {
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
                                   style: mTextStyle16(
-                                      mFontColor:
-                                          ColorConstant.mattBlackColor,
+                                      mFontColor: ColorConstant.mattBlackColor,
                                       mWeight: isRead
                                           ? FontWeight.w500
                                           : FontWeight.bold),
@@ -139,12 +140,14 @@ class _DashboardState extends State<Dashboard> {
                               isRead
                                   ? Container()
                                   : CircleAvatar(
-                                      backgroundColor: ColorConstant.gradientDarkColor,
+                                      backgroundColor:
+                                          ColorConstant.gradientDarkColor,
                                       radius: 10,
                                       child: Text(
                                         "2",
                                         style: mTextStyle12(
-                                            mFontColor:ColorConstant.tabSelectedColor),
+                                            mFontColor:
+                                                ColorConstant.tabSelectedColor),
                                       ),
                                     )
                             ],

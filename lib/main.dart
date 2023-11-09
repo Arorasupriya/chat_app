@@ -1,12 +1,17 @@
 //region ImportsHeaderFile
-import 'package:fb_chat_app/screens/dashboard_screens/contact_screen.dart';
-import 'package:fb_chat_app/screens/splash.dart';
+import 'package:fb_chat_app/firebase_options.dart';
+import 'package:fb_chat_app/screens/onboarding_screens/splash.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 //endregion
 
 //region MainMethod
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 //endregion
@@ -24,11 +29,11 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
+        title: 'Chatify',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const SplashScreen());
+        home: const SplashScreen()); //const SplashScreen()
   }
 }

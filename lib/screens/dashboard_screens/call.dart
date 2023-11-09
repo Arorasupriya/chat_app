@@ -37,7 +37,7 @@ class _CallScreenState extends State<CallScreen> {
                   return Padding(
                     padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                     child: InkWell(
-                      //Inkwell => go to next screen
+                      //Inkwell => go to next screen (CallDetailScreen())
                       onTap: () {
                         print("Tapped index$index");
                         Navigator.push(

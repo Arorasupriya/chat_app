@@ -28,10 +28,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   String pickedImageURL = "";
 
   //Private function
-  setTextFrame(TextEditingController controller,
-      String hint,
-      TextInputType keyboardType,
-      TextInputAction textInputAction,) {
+  setTextFrame(
+    TextEditingController controller,
+    String hint,
+    TextInputType keyboardType,
+    TextInputAction textInputAction,
+  ) {
     return SizedBox(
       height: 50,
       child: TextField(
@@ -44,19 +46,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(21),
             borderSide:
-            const BorderSide(color: ColorConstant.gradientDarkColor),
+                const BorderSide(color: ColorConstant.gradientDarkColor),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(21),
             borderSide:
-            const BorderSide(color: ColorConstant.gradientDarkColor),
+                const BorderSide(color: ColorConstant.gradientDarkColor),
           ),
         ),
       ),
     );
   }
 
-  setTextFrameWithIcon(TextEditingController controller,
+  setTextFrameWithIcon(
+      TextEditingController controller,
       String hint,
       TextInputType keyboardType,
       TextInputAction textInputAction,
@@ -75,12 +78,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(21),
             borderSide:
-            const BorderSide(color: ColorConstant.gradientDarkColor),
+                const BorderSide(color: ColorConstant.gradientDarkColor),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(21),
             borderSide:
-            const BorderSide(color: ColorConstant.gradientDarkColor),
+                const BorderSide(color: ColorConstant.gradientDarkColor),
           ),
         ),
       ),
@@ -99,8 +102,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
         //Format Date
         birthDateInString =
-        "${birthDate!.month}/${birthDate!.day}/${birthDate!
-            .year}"; // 10/19/2023
+            "${birthDate!.month}/${birthDate!.day}/${birthDate!.year}"; // 10/19/2023
         print("date DOB $birthDateInString ");
         txtUserDOBController.text = birthDateInString;
       });
@@ -110,9 +112,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   //BuildMethod
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery
-        .of(context)
-        .size;
+    var size = MediaQuery.of(context).size;
 
     return Scaffold(
       backgroundColor: ColorConstant.gradientDarkColor,
@@ -172,8 +172,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 color: Colors.blue,
                                 shape: BoxShape.circle,
                                 image: pickedImageURL != ""
-                                    ?DecorationImage(image: FileImage(File(pickedImageURL)))
-                                    :const DecorationImage(image: AssetImage("assets/icons/ic_user_default.png"),fit: BoxFit.fill,),
+                                    ? DecorationImage(
+                                        image: FileImage(File(pickedImageURL)))
+                                    : const DecorationImage(
+                                        image: AssetImage(
+                                            "assets/icons/ic_user_default.png"),
+                                        fit: BoxFit.fill,
+                                      ),
                               ),
                             ),
                             Positioned(
@@ -182,7 +187,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                     backgroundColor:
-                                    ColorConstant.gradientDarkColor,
+                                        ColorConstant.gradientDarkColor,
                                     padding: EdgeInsets.zero,
                                     fixedSize: const Size(30, 30),
                                     shape: const CircleBorder()),
@@ -242,7 +247,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             style: ElevatedButton.styleFrom(
                                 fixedSize: const Size(100, 50),
                                 backgroundColor:
-                                ColorConstant.gradientDarkColor),
+                                    ColorConstant.gradientDarkColor),
                             onPressed: () {
                               print("Save all updates");
                             },

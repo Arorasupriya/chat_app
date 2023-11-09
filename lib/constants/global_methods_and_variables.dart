@@ -1,14 +1,32 @@
 import 'package:fb_chat_app/constants/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AppVariables {
   ///Variables
   static late String title;
   static late bool isDark;
+
+  //currently used
+  static const String IS_LOGGED_IN_USER = "loggedIn";
+  static const String USER_ID = "UserId";
 }
 
 hideKeyboard(BuildContext context) {
   FocusScope.of(context).unfocus();
+}
+
+setUserDataInSP(bool isLoggedIn, String userId) async {
+  SharedPreferences pre = await SharedPreferences.getInstance();
+  pre.setString(AppVariables.USER_ID, userId);
+  pre.setBool(AppVariables.IS_LOGGED_IN_USER, isLoggedIn);
+}
+
+Future<String> getUserIdFromSP() async {
+  SharedPreferences pre = await SharedPreferences.getInstance();
+  String? id;
+  id = pre.getString(AppVariables.USER_ID);
+  return id ?? " ";
 }
 
 bool getThemeByMQAndThemeContext(BuildContext context) {
