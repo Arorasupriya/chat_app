@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:fb_chat_app/constants/app_colors.dart';
 import 'package:fb_chat_app/constants/custom_widget.dart';
 import 'package:fb_chat_app/constants/global_methods_and_variables.dart';
@@ -15,12 +18,60 @@ class SignInScreen extends StatefulWidget {
   State<SignInScreen> createState() => _SignInScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
+class _SignInScreenState extends State<SignInScreen>
+    with TickerProviderStateMixin {
   var formKey = GlobalKey<FormState>();
   var txtEmailController = TextEditingController();
   var txtPasswordController = TextEditingController();
 
+  late AnimationController animationControllerFromRight;
+  late Animation<Offset> offsetAnimation;
+
+  late AnimationController offsetAnimationControllerFromLeft;
+  late Animation<Offset> offsetAnimationFromLeft;
+
   bool isPasswordVisible = true;
+
+  @override
+  void initState() {
+    super.initState();
+    createOffSetAnimationFromLeft();
+    createOffSetAnimationFromRight();
+  }
+
+  @override
+  void dispose() {
+    animationControllerFromRight.dispose();
+    offsetAnimationControllerFromLeft.dispose();
+    super.dispose();
+  }
+
+  void createOffSetAnimationFromRight() {
+    animationControllerFromRight = AnimationController(
+      duration: const Duration(seconds: 5),
+      vsync: this,
+    );
+    offsetAnimation =
+        Tween<Offset>(begin: const Offset(1.5, 0.0), end: Offset.zero).animate(
+            CurvedAnimation(
+                parent: animationControllerFromRight,
+                curve: Curves.elasticInOut)); //const Interval(0.5, 1.0)
+    animationControllerFromRight.forward(from: 0.0);
+  }
+
+  void createOffSetAnimationFromLeft() {
+    offsetAnimationControllerFromLeft = AnimationController(
+      duration: const Duration(seconds: 3),
+      vsync: this,
+    );
+    offsetAnimationFromLeft =
+        Tween<Offset>(begin: const Offset(-2.0, 0.0), end: Offset.zero).animate(
+      CurvedAnimation(
+          parent: offsetAnimationControllerFromLeft,
+          curve: Curves.elasticInOut),
+    );
+    offsetAnimationControllerFromLeft.forward(from: 0.0);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +93,17 @@ class _SignInScreenState extends State<SignInScreen> {
             Positioned(
               top: deviceHeight * 0.13,
               left: deviceWidth * 0.35,
-              child: Text(
-                "Sign In",
-                style: mTextStyle25(mWeight: FontWeight.bold),
+              child: AnimatedTextKit(
+                repeatForever: true,
+                animatedTexts: [
+                  ColorizeAnimatedText("Sign In",
+                      textStyle: mTextStyle25(mWeight: FontWeight.bold),
+                      speed: Duration(milliseconds: 500),
+                      colors: [
+                        Colors.black,
+                        ColorConstant.gradientLightColor,
+                      ]),
+                ],
               ),
             ),
             Padding(
@@ -57,57 +116,63 @@ class _SignInScreenState extends State<SignInScreen> {
                   children: [
                     hSpacer(mHeight: 250),
                     //hSpacer(mHeight: 10),
-                    Padding(
-                      padding: const EdgeInsets.all(11.0),
-                      child: TextFormField(
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return "Please enter your email";
-                          }
-                          return null;
-                        },
-                        style: mTextStyle12(),
-                        controller: txtEmailController,
-                        keyboardType: TextInputType.emailAddress,
-                        textInputAction: TextInputAction.next,
-                        decoration: myDecoration(
-                          mHintText: "Email Address",
-                          mLabelText: "Enter Your Email",
-                          bRadius: 12,
+                    SlideTransition(
+                      position: offsetAnimationFromLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.all(11.0),
+                        child: TextFormField(
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Please enter your email";
+                            }
+                            return null;
+                          },
+                          style: mTextStyle12(),
+                          controller: txtEmailController,
+                          keyboardType: TextInputType.emailAddress,
+                          textInputAction: TextInputAction.next,
+                          decoration: myDecoration(
+                            mHintText: "Email Address",
+                            mLabelText: "Enter Your Email",
+                            bRadius: 12,
+                          ),
                         ),
                       ),
                     ),
                     // hSpacer(mHeight: 20),
-                    Padding(
-                      padding: const EdgeInsets.all(11.0),
-                      child: TextFormField(
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return "Please enter password";
-                          } else if (value.isNotEmpty) {
-                            if (value.length < 8) {
-                              return "Must be at least 8 characters";
+                    SlideTransition(
+                      position: offsetAnimation,
+                      child: Padding(
+                        padding: const EdgeInsets.all(11.0),
+                        child: TextFormField(
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Please enter password";
+                            } else if (value.isNotEmpty) {
+                              if (value.length < 8) {
+                                return "Must be at least 8 characters";
+                              }
                             }
-                          }
-                          return null;
-                        },
-                        controller: txtPasswordController,
-                        keyboardType: TextInputType.text,
-                        textInputAction: TextInputAction.done,
-                        obscureText: isPasswordVisible,
-                        obscuringCharacter: "*",
-                        decoration: myDecoration(
-                            mHintText: "Password",
-                            mLabelText: "Password",
-                            bRadius: 12,
-                            surFixIconName: isPasswordVisible
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                            mySuffixIconColor: Colors.black.withOpacity(0.7),
-                            onSurFixIconTap: () {
-                              isPasswordVisible = !isPasswordVisible;
-                              setState(() {});
-                            }),
+                            return null;
+                          },
+                          controller: txtPasswordController,
+                          keyboardType: TextInputType.text,
+                          textInputAction: TextInputAction.done,
+                          obscureText: isPasswordVisible,
+                          obscuringCharacter: "*",
+                          decoration: myDecoration(
+                              mHintText: "Password",
+                              mLabelText: "Password",
+                              bRadius: 12,
+                              surFixIconName: isPasswordVisible
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                              mySuffixIconColor: Colors.black.withOpacity(0.7),
+                              onSurFixIconTap: () {
+                                isPasswordVisible = !isPasswordVisible;
+                                setState(() {});
+                              }),
+                        ),
                       ),
                     ),
                     hSpacer(mHeight: 50),
@@ -175,6 +240,11 @@ class _SignInScreenState extends State<SignInScreen> {
                         )),
                     hSpacer(mHeight: 30),
                     InkWell(
+                      overlayColor: MaterialStateProperty.resolveWith((states) {
+                        if (states.contains(MaterialState.pressed)) {
+                          return Colors.transparent;
+                        }
+                      }),
                       onTap: () {
                         Navigator.pushReplacement(
                             context,

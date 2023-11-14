@@ -126,9 +126,10 @@ class _MyTabViewState extends State<MyTabView> {
                 mWeight: FontWeight.w500),
           ),
           bottom: TabBar(
-            indicatorColor: ColorConstant.tabSelectedColor,
+            indicatorColor: ColorConstant.gradientDarkColor,
             dividerColor: ColorConstant.tabSelectedColor,
             indicatorSize: TabBarIndicatorSize.tab,
+            indicatorWeight: 5.0,
             tabs: [
               const Tab(
                 icon: Icon(
