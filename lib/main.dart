@@ -1,4 +1,12 @@
+//region changeStatusBarColor
+/*SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    systemNavigationBarColor: Colors.blue, // navigation bar color
+    statusBarColor: Colors.pink, // status bar color
+  ));*/
+//endregion
+
 //region ImportsHeaderFile
+import 'package:fb_chat_app/constants/app_colors.dart';
 import 'package:fb_chat_app/firebase_options.dart';
 import 'package:fb_chat_app/screens/onboarding_screens/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -12,6 +20,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(const MyApp());
 }
 //endregion
@@ -31,7 +40,7 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         title: 'Chatify',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          //primarySwatch: Colors.cyan,
           useMaterial3: true,
         ),
         home: const SplashScreen()); //const SplashScreen()

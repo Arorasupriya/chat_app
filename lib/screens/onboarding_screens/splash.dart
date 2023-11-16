@@ -48,7 +48,6 @@ class _SplashScreenState extends State<SplashScreen>
   Widget build(BuildContext context) {
     double deviceHeight = MediaQuery.of(context).size.height;
     double deviceWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
       body: Container(
         height: deviceHeight,

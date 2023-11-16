@@ -37,6 +37,8 @@ class Assets {
       'lib/screens/detail_screens/edit_profile_screen.dart';
   static const String detailScreensProfileScreen =
       'lib/screens/detail_screens/profile_screen.dart';
+  static const String detailScreensRazorpayScreen =
+      'lib/screens/detail_screens/razorpay_screen.dart';
   static const String detailScreensStatusDetailScreen =
       'lib/screens/detail_screens/status_detail_screen.dart';
   static const String generatedAssets = 'lib/generated/assets.dart';
@@ -50,6 +52,7 @@ class Assets {
   static const String iconsIcUserDefault = 'assets/icons/ic_user_default.png';
   static const String libFirebaseOptions = 'lib/firebase_options.dart';
   static const String libMain = 'lib/main.dart';
+  static const String modelsMessageModel = 'lib/models/message_model.dart';
   static const String modelsUserModel = 'lib/models/user_model.dart';
   static const String onboardingScreensLoginScreen =
       'lib/screens/onboarding_screens/login_screen.dart';

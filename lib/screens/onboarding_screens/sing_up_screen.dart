@@ -24,18 +24,18 @@ class _SignUpScreenState extends State<SignUpScreen>
   late Animation<double> opacityAnimation;
 
   late AnimationController animationControllerFromRight;
-  late Animation<Offset> offsetAnimation;
+  late Animation<Offset> offsetAnimationFromRight;
 
   late AnimationController offsetAnimationControllerFromLeft;
   late Animation<Offset> offsetAnimationFromLeft;
 
+  //variable Declaration
   var formKey = GlobalKey<FormState>();
   var txtNameController = TextEditingController();
   var txtEmailController = TextEditingController();
   var txtMobileNumberController = TextEditingController();
   var txtCityController = TextEditingController();
   var txtPasswordController = TextEditingController();
-
   bool isPasswordVisible = true;
 
   @override
@@ -70,24 +70,23 @@ class _SignUpScreenState extends State<SignUpScreen>
       duration: const Duration(seconds: 3),
       vsync: this,
     );
-    offsetAnimation =
+    offsetAnimationFromRight =
         Tween<Offset>(begin: const Offset(1.5, 0.0), end: Offset.zero).animate(
             CurvedAnimation(
                 parent: animationControllerFromRight,
-                curve: Curves.elasticInOut)); //const Interval(0.5, 1.0)
+                curve: Curves.easeIn)); //const Interval(0.5, 1.0)
     animationControllerFromRight.forward(from: 0.0);
   }
 
   void createOffSetAnimationFromLeft() {
     offsetAnimationControllerFromLeft = AnimationController(
-      duration: const Duration(seconds: 5),
+      duration: const Duration(seconds: 4),
       vsync: this,
     );
     offsetAnimationFromLeft =
         Tween<Offset>(begin: const Offset(-2.0, 0.0), end: Offset.zero).animate(
       CurvedAnimation(
-          parent: offsetAnimationControllerFromLeft,
-          curve: Curves.elasticInOut),
+          parent: offsetAnimationControllerFromLeft, curve: Curves.easeIn),
     );
     offsetAnimationControllerFromLeft.forward(from: 0.0);
   }
@@ -131,7 +130,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                   children: [
                     hSpacer(mHeight: 180),
                     SlideTransition(
-                      position: offsetAnimation,
+                      position: offsetAnimationFromRight,
                       child: Padding(
                         padding: const EdgeInsets.all(11.0),
                         child: Material(
@@ -188,7 +187,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                     ),
                     //hSpacer(mHeight: 20),
                     SlideTransition(
-                      position: offsetAnimation,
+                      position: offsetAnimationFromRight,
                       child: Padding(
                         padding: const EdgeInsets.all(11.0),
                         child: Material(
@@ -250,7 +249,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                     ),
                     // hSpacer(mHeight: 20),
                     SlideTransition(
-                      position: offsetAnimation,
+                      position: offsetAnimationFromRight,
                       child: Padding(
                         padding: const EdgeInsets.all(11.0),
                         child: Material(
@@ -438,8 +437,9 @@ class _SignUpScreenState extends State<SignUpScreen>
         });
   }
 }
-/*
-  */
+
+//region CommentedCode
+
 /*
 AnimatedTextKit(
                   isRepeatingAnimation: false,
@@ -450,3 +450,4 @@ AnimatedTextKit(
                     ),
                   ],
                 )*/
+//endregion

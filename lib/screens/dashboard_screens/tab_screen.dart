@@ -6,6 +6,8 @@ import 'package:fb_chat_app/screens/dashboard_screens/dashboard.dart';
 import 'package:fb_chat_app/screens/dashboard_screens/map_screen.dart';
 import 'package:fb_chat_app/screens/dashboard_screens/settings_screen.dart';
 import 'package:fb_chat_app/screens/dashboard_screens/status_screen.dart';
+import 'package:fb_chat_app/screens/detail_screens/chat_detail_screen.dart';
+import 'package:fb_chat_app/screens/detail_screens/razorpay_screen.dart';
 import 'package:fb_chat_app/screens/onboarding_screens/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -75,6 +77,15 @@ class _MyTabViewState extends State<MyTabView> {
 
           ///AppBar Use IconButton=> menu text=>AppName
           actions: [
+            IconButton(
+                onPressed: () {
+                  showSearch(
+                      context: context, delegate: CustomSearchDelegate());
+                },
+                icon: const Icon(
+                  Icons.search,
+                  color: Colors.white,
+                )),
             PopupMenuButton(
                 color: ColorConstant.tabSelectedColor,
                 itemBuilder: (BuildContext context) => <PopupMenuEntry<Item>>[
@@ -85,6 +96,13 @@ class _MyTabViewState extends State<MyTabView> {
                             style: mTextStyle12(),
                           )),
                       PopupMenuItem<Item>(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const RazorPayScreen()));
+                          },
                           value: Item.itemTwo,
                           child: Text(
                             "Payment",
@@ -164,6 +182,79 @@ class _MyTabViewState extends State<MyTabView> {
         ),
       ),
     );
+  }
+}
+
+class CustomSearchDelegate extends SearchDelegate {
+  List<String> searchTerm = ["Supriya", "Priya", "Pari", "Arohi", "Arnav"];
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    return [
+      IconButton(
+          onPressed: () {
+            query = "";
+          },
+          icon: const Icon(Icons.clear))
+    ];
+  }
+
+  @override
+  Widget? buildLeading(BuildContext context) {
+    return IconButton(
+        onPressed: () {
+          close(context, null);
+        },
+        icon: const Icon(Icons.arrow_back));
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    List<String> matchQuery = [];
+    for (var data in searchTerm) {
+      if (data.toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(data);
+      }
+    }
+    return ListView.builder(
+        itemCount: matchQuery.length,
+        itemBuilder: (context, index) {
+          var result = matchQuery[index];
+          return ListTile(
+            title: Text(
+              result,
+              style: mTextStyle12(),
+            ),
+          );
+        });
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    List<String> matchQuery = [];
+    for (var data in searchTerm) {
+      if (data.toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(data);
+      }
+    }
+    return ListView.builder(
+        itemCount: matchQuery.length,
+        itemBuilder: (context, index) {
+          var result = matchQuery[index];
+          return InkWell(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ChatDetailScreen()));
+            },
+            child: ListTile(
+              title: Text(
+                result,
+                style: mTextStyle12(),
+              ),
+            ),
+          );
+        });
   }
 }
 

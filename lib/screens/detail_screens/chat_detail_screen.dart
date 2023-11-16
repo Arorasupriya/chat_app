@@ -3,9 +3,10 @@ import 'dart:io';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:fb_chat_app/constants/app_colors.dart';
 import 'package:fb_chat_app/constants/custom_widget.dart';
-import 'package:fb_chat_app/constants/global_methods_and_variables.dart';
 import 'package:fb_chat_app/constants/my_text_styles.dart';
+import 'package:fb_chat_app/models/message_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ChatDetailScreen extends StatefulWidget {
   const ChatDetailScreen({super.key});
@@ -15,6 +16,30 @@ class ChatDetailScreen extends StatefulWidget {
 }
 
 class _ChatDetailScreenState extends State<ChatDetailScreen> {
+  List<MessageModel> messages = [
+    MessageModel(
+        messageContent: "Hii i m Supriya Arora", messageType: "receiver"),
+    MessageModel(messageContent: "Hii i m Priya Arora", messageType: "sender"),
+    MessageModel(messageContent: "Hii i m Pari Arora", messageType: "receiver"),
+    MessageModel(
+        messageContent: "Hii i m Pooja Arora", messageType: "receiver"),
+    MessageModel(messageContent: "Hii i m Poonam Arora", messageType: "sender"),
+    MessageModel(
+        messageContent: "Hii i m Supriya Arora", messageType: "receiver"),
+    MessageModel(
+        messageContent: "Hii i m Supriya Arora", messageType: "sender"),
+    MessageModel(messageContent: "Hii i m Poonam Arora", messageType: "sender"),
+    MessageModel(
+        messageContent: "Hii i m Supriya Arora", messageType: "receiver"),
+    MessageModel(
+        messageContent: "Hii i m Supriya Arora", messageType: "sender"),
+    MessageModel(messageContent: "Hii i m Poonam Arora", messageType: "sender"),
+    MessageModel(
+        messageContent: "Hii i m Supriya Arora", messageType: "receiver"),
+    MessageModel(
+        messageContent: "Hii i m Supriya Arora", messageType: "sender"),
+  ];
+
   var txtMessageBox = TextEditingController();
   int getTextLength = 0;
   bool isWrapWidgetVisible = true;
@@ -40,93 +65,103 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
           }
         },
         child: Scaffold(
-          body: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
-            child: Column(
+          appBar: AppBar(
+            iconTheme: const IconThemeData(color: Colors.white),
+            backgroundColor: ColorConstant.gradientDarkColor,
+            leadingWidth: 40,
+            title: Row(
               children: [
-                Container(
-                  decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                        ColorConstant.gradientDarkColor,
-                        ColorConstant.gradientLightColor
-                      ])),
-                  height: 80,
-                  width: double.infinity,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        IconButton(
-                            onPressed: () {
-                              hideKeyboard(context);
-                              Navigator.pop(context);
-                            },
-                            icon: const Icon(
-                              Icons.arrow_back_ios,
-                              size: 22,
-                              color: ColorConstant.tabSelectedColor,
-                            )),
-                        CircleAvatar(
-                          radius: 20,
-                          child: Image.asset(
-                            "assets/icons/ic_profile.png",
-                            height: 30,
-                            width: 30,
-                          ),
-                        ),
-                        wSpacer(mWidth: 5),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Supriya Arora",
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: mTextStyle12(
-                                  mFontColor: ColorConstant.tabSelectedColor,
-                                  mWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              strOnlineStatus,
-                              maxLines: 1,
-                              style: mTextStyle12(
-                                  mFontColor: strOnlineStatus == "Online"
-                                      ? ColorConstant.tabSelectedColor
-                                      : ColorConstant.fontTitleBlackColor,
-                                  mWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                        wSpacer(mWidth: 60),
-                        IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.video_call,
-                              size: 22,
-                              color: ColorConstant.tabSelectedColor,
-                            )),
-                        IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.call,
-                              size: 22,
-                              color: ColorConstant.tabSelectedColor,
-                            ))
-                      ],
-                    ),
+                CircleAvatar(
+                  radius: 20,
+                  child: Image.asset(
+                    "assets/icons/ic_profile.png",
+                    height: 30,
+                    width: 30,
                   ),
                 ),
-                const Expanded(child: Stack()),
+                wSpacer(mWidth: 10),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Supriya Arora",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: mTextStyle12(
+                          mFontColor: ColorConstant.tabSelectedColor,
+                          mWeight: FontWeight.w500),
+                    ),
+                    Text(
+                      strOnlineStatus,
+                      maxLines: 1,
+                      style: mTextStyle12(
+                          mFontColor: strOnlineStatus == "Online"
+                              ? ColorConstant.tabSelectedColor
+                              : ColorConstant.fontTitleBlackColor,
+                          mWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+                wSpacer(mWidth: 60),
+                IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.video_call,
+                      size: 22,
+                      color: ColorConstant.tabSelectedColor,
+                    )),
+                IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.call,
+                      size: 22,
+                      color: ColorConstant.tabSelectedColor,
+                    ))
+              ],
+            ),
+            systemOverlayStyle: SystemUiOverlayStyle(
+                statusBarColor: ColorConstant.gradientDarkColor),
+          ),
+          body: Padding(
+            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+            child: Column(
+              children: [
+                Expanded(
+                    child: ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        padding: const EdgeInsets.only(top: 10, bottom: 10),
+                        itemCount: messages.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            padding: const EdgeInsets.only(
+                                left: 14, right: 14, top: 10, bottom: 10),
+                            child: Align(
+                              alignment:
+                                  messages[index].messageType == "receiver"
+                                      ? Alignment.topLeft
+                                      : Alignment.topRight,
+                              child: Container(
+                                padding: const EdgeInsets.all(12),
+                                decoration: BoxDecoration(
+                                    color: messages[index].messageType ==
+                                            "receiver"
+                                        ? ColorConstant.gradientLightColor
+                                        : ColorConstant.gradientDarkColor,
+                                    borderRadius: BorderRadius.circular(12)),
+                                child: Text(
+                                    messages[index].messageContent.toString()),
+                              ),
+                            ),
+                          );
+                        })),
                 Container(
                   padding: EdgeInsets.zero,
                   color: Colors.transparent,
-                  height: 100,
+                  height: 80,
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+                    padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
                     child: Row(
                       children: [
                         Expanded(
@@ -220,12 +255,18 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 // padding: EdgeInsets.zero,
-                                elevation: 5,
+                                elevation: 10,
                                 backgroundColor:
                                     ColorConstant.gradientDarkColor,
                                 fixedSize: const Size(40, 40),
                                 shape: const CircleBorder()),
-                            onPressed: () {},
+                            onPressed: () {
+                              messages.add(MessageModel(
+                                  messageContent: txtMessageBox.text.toString(),
+                                  messageType: "sender"));
+                              setState(() {});
+                              txtMessageBox.clear();
+                            },
                             child: Image.asset(
                               "assets/icons/ic_send.png",
                               width: 30,
@@ -258,7 +299,83 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
 }
 
 //how to call this //Button()
-//region ShowPopOver
+//region commented code
+/*Container(
+               decoration: const BoxDecoration(
+                   gradient: LinearGradient(
+                       begin: Alignment.topLeft,
+                       end: Alignment.bottomRight,
+                       colors: [
+                     ColorConstant.gradientDarkColor,
+                     ColorConstant.gradientLightColor
+                   ])),
+               height: 60,
+               width: double.infinity,
+               child: Padding(
+                 padding: const EdgeInsets.all(8.0),
+                 child: Row(
+                   children: [
+                     IconButton(
+                         onPressed: () {
+                           hideKeyboard(context);
+                           Navigator.pop(context);
+                         },
+                         icon: const Icon(
+                           Icons.arrow_back_ios,
+                           size: 22,
+                           color: ColorConstant.tabSelectedColor,
+                         )),
+                     CircleAvatar(
+                       radius: 20,
+                       child: Image.asset(
+                         "assets/icons/ic_profile.png",
+                         height: 30,
+                         width: 30,
+                       ),
+                     ),
+                     wSpacer(mWidth: 5),
+                     Column(
+                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                       crossAxisAlignment: CrossAxisAlignment.start,
+                       children: [
+                         Text(
+                           "Supriya Arora",
+                           maxLines: 1,
+                           overflow: TextOverflow.ellipsis,
+                           style: mTextStyle12(
+                               mFontColor: ColorConstant.tabSelectedColor,
+                               mWeight: FontWeight.bold),
+                         ),
+                         Text(
+                           strOnlineStatus,
+                           maxLines: 1,
+                           style: mTextStyle12(
+                               mFontColor: strOnlineStatus == "Online"
+                                   ? ColorConstant.tabSelectedColor
+                                   : ColorConstant.fontTitleBlackColor,
+                               mWeight: FontWeight.bold),
+                         ),
+                       ],
+                     ),
+                     wSpacer(mWidth: 60),
+                     IconButton(
+                         onPressed: () {},
+                         icon: const Icon(
+                           Icons.video_call,
+                           size: 22,
+                           color: ColorConstant.tabSelectedColor,
+                         )),
+                     IconButton(
+                         onPressed: () {},
+                         icon: const Icon(
+                           Icons.call,
+                           size: 22,
+                           color: ColorConstant.tabSelectedColor,
+                         ))
+                   ],
+                 ),
+               ),
+             ),*/
 /*class Button extends StatelessWidget {
   const Button({Key? key}) : super(key: key);
 
