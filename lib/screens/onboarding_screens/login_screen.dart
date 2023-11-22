@@ -81,6 +81,7 @@ class _SignInScreenState extends State<SignInScreen>
       child: Scaffold(
         backgroundColor: ColorConstant.gradientLightColor,
         body: SingleChildScrollView(
+          reverse: true,
           child: Stack(children: [
             ClipPath(
               clipper: LoginPageClipper(),
@@ -187,15 +188,15 @@ class _SignInScreenState extends State<SignInScreen>
                           if (formKey.currentState!.validate()) {
                             //create FirebaseAuth.instance
                             var auth = FirebaseAuth.instance;
-                            bool isLoggedIn;
                             String userId;
+                            bool isLoggedIn;
 
                             try {
                               // get all values in variable
                               var userEmail = txtEmailController.text;
                               var userPassword = txtPasswordController.text;
 
-                              var credential =
+                              UserCredential credential =
                                   await auth.signInWithEmailAndPassword(
                                       email: userEmail,
                                       password: userPassword); //

@@ -16,6 +16,7 @@ class ChatDetailScreen extends StatefulWidget {
 }
 
 class _ChatDetailScreenState extends State<ChatDetailScreen> {
+  // SingleChildScrollView controller = SingleChildScrollView();
   List<MessageModel> messages = [
     MessageModel(
         messageContent: "Hii i m Supriya Arora", messageType: "receiver"),
@@ -120,7 +121,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                     ))
               ],
             ),
-            systemOverlayStyle: SystemUiOverlayStyle(
+            systemOverlayStyle: const SystemUiOverlayStyle(
                 statusBarColor: ColorConstant.gradientDarkColor),
           ),
           body: Padding(
