@@ -18,7 +18,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   List<Widget> listScreens = [
     const ProfileScreen(),
-    const ChatDetailScreen(),
+    ChatDetailScreen(),
     const ProfileScreen(),
   ];
 

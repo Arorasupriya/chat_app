@@ -20,6 +20,7 @@ setUserDataInSP(bool isLoggedIn, String userId) async {
   SharedPreferences pre = await SharedPreferences.getInstance();
   pre.setString(AppVariables.USER_ID, userId);
   pre.setBool(AppVariables.IS_LOGGED_IN_USER, isLoggedIn);
+  debugPrint("print SP LS UID=====> $isLoggedIn,$userId");
 }
 
 Future<String> getUserIdFromSP() async {

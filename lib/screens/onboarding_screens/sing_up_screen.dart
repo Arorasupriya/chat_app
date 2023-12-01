@@ -1,12 +1,10 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fb_chat_app/constants/app_colors.dart';
 import 'package:fb_chat_app/constants/custom_widget.dart';
 import 'package:fb_chat_app/constants/my_text_styles.dart';
-import 'package:fb_chat_app/models/user_model.dart';
+import 'package:fb_chat_app/firebase/firebase_constant.dart';
 import 'package:fb_chat_app/screens/clipper/custom_clipper.dart';
 import 'package:fb_chat_app/screens/onboarding_screens/login_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -301,60 +299,15 @@ class _SignUpScreenState extends State<SignUpScreen>
                                   borderRadius: BorderRadius.circular(11))),
                           onPressed: () async {
                             if (formKey.currentState!.validate()) {
-                              //create FirebaseAuth.instance
-                              var auth = FirebaseAuth.instance;
-
-                              try {
-                                // get all values in variable
-                                var userName = txtNameController.text;
-                                var userEmail = txtEmailController.text;
-                                var userMobileNumber =
-                                    txtMobileNumberController.text;
-                                var userCity = txtCityController.text;
-                                var userPassword = txtPasswordController.text;
-
-                                var credential =
-                                    await auth.createUserWithEmailAndPassword(
-                                        email: userEmail,
-                                        password: userPassword); //
-
-                                var db = FirebaseFirestore.instance;
-                                db
-                                    .collection("users")
-                                    .doc(credential.user!.uid)
-                                    .set(UserModel(
-                                            name: userName,
-                                            email: userEmail,
-                                            mobileNumber: userMobileNumber,
-                                            city: userCity,
-                                            id: credential.user!.uid)
-                                        .toJson());
-                                print(
-                                    "user added id ===> ${credential.user!.uid}");
-                                print("Signup successfully");
-
-                                //clear all text controllers
-                                txtNameController.clear();
-                                txtEmailController.clear();
-                                txtMobileNumberController.clear();
-                                txtCityController.clear();
-                                txtPasswordController.clear();
-                                gotoSignInScreen();
-                              } on FirebaseAuthException catch (e) {
-                                var title = "Sign up Alert";
-                                if (e.code == 'weak-password') {
-                                  var strMessage =
-                                      'The password provided is too weak.';
-                                  ShowAlertBox(strMessage, title);
-                                } else if (e.code == 'email-already-in-use') {
-                                  var strMessage =
-                                      'The account already exists for that email.';
-                                  ShowAlertBox(strMessage, title);
-                                }
-                                debugPrint(e.code);
-                              } catch (e) {
-                                debugPrint(e as String?);
-                              }
+                              FirebaseConstant()
+                                  .pCreateUserWithEmailAndPassword(
+                                      txtEmailController.text.toString(),
+                                      txtPasswordController.text.toString(),
+                                      txtNameController.text.toString(),
+                                      txtMobileNumberController.text.toString(),
+                                      txtCityController.text.toString(),
+                                      context);
+                              formKey.currentState!.reset();
                             }
                           },
                           child: Text(
@@ -409,32 +362,6 @@ class _SignUpScreenState extends State<SignUpScreen>
           type: PageTransitionType.rightToLeft,
           child: const SignInScreen(),
         ));
-  }
-
-  void ShowAlertBox(String content, String title) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text(title),
-            content: Text(content),
-            actions: [
-              TextButton(
-                  onPressed: () {
-                    txtNameController.clear();
-                    txtEmailController.clear();
-                    txtMobileNumberController.clear();
-                    txtCityController.clear();
-                    txtPasswordController.clear();
-                    Navigator.pop(context);
-                  },
-                  child: Text(
-                    "Ok",
-                    style: mTextStyle16(),
-                  ))
-            ],
-          );
-        });
   }
 }
 

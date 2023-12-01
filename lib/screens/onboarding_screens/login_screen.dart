@@ -1,14 +1,10 @@
-import 'dart:async';
-
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:fb_chat_app/constants/app_colors.dart';
 import 'package:fb_chat_app/constants/custom_widget.dart';
-import 'package:fb_chat_app/constants/global_methods_and_variables.dart';
 import 'package:fb_chat_app/constants/my_text_styles.dart';
+import 'package:fb_chat_app/firebase/firebase_constant.dart';
 import 'package:fb_chat_app/screens/clipper/custom_clipper.dart';
-import 'package:fb_chat_app/screens/dashboard_screens/tab_screen.dart';
 import 'package:fb_chat_app/screens/onboarding_screens/sing_up_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -81,7 +77,6 @@ class _SignInScreenState extends State<SignInScreen>
       child: Scaffold(
         backgroundColor: ColorConstant.gradientLightColor,
         body: SingleChildScrollView(
-          reverse: true,
           child: Stack(children: [
             ClipPath(
               clipper: LoginPageClipper(),
@@ -186,53 +181,12 @@ class _SignInScreenState extends State<SignInScreen>
                                 borderRadius: BorderRadius.circular(11))),
                         onPressed: () async {
                           if (formKey.currentState!.validate()) {
-                            //create FirebaseAuth.instance
-                            var auth = FirebaseAuth.instance;
-                            String userId;
-                            bool isLoggedIn;
-
-                            try {
-                              // get all values in variable
-                              var userEmail = txtEmailController.text;
-                              var userPassword = txtPasswordController.text;
-
-                              UserCredential credential =
-                                  await auth.signInWithEmailAndPassword(
-                                      email: userEmail,
-                                      password: userPassword); //
-
-                              print(
-                                  "user added id ===> ${credential.user!.uid}");
-
-                              //save data in SharedPreference
-                              isLoggedIn = true;
-                              userId = credential.user!.uid;
-                              setUserDataInSP(isLoggedIn, userId);
-                              print("========> $isLoggedIn,$userId");
-                              print("SuccessFully logged in ");
-
-                              //pass id in next screen
-                              var idData = await getUserIdFromSP();
-                              //navigate to next screen
-                              gotoSignInScreen(idData);
-
-                              //clear all text controllers
-                              txtEmailController.clear();
-                              txtPasswordController.clear();
-                            } on FirebaseAuthException catch (e) {
-                              var title = "Login Alert";
-                              if (e.code == 'user-not-found') {
-                                var content = 'No user found for that email.';
-                                ShowAlertBox(content, title);
-                              } else if (e.code ==
-                                  'INVALID_LOGIN_CREDENTIALS') {
-                                var content = 'Invalid login credential';
-                                ShowAlertBox(content, title);
-                              }
-                              print("error${e.code}");
-                            } catch (e) {
-                              debugPrint(e as String?);
-                            }
+                            FirebaseConstant().pSignInWithEmailAndPassword(
+                                txtEmailController.text.toString(),
+                                txtPasswordController.text.toString(),
+                                context);
+                            txtEmailController.clear();
+                            txtPasswordController.clear();
                           }
                         },
                         child: Text(
@@ -275,35 +229,5 @@ class _SignInScreenState extends State<SignInScreen>
         ),
       ),
     );
-  }
-
-  void gotoSignInScreen(String uid) {
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) => MyTabView(
-                  getUid: uid,
-                )));
-  }
-
-  void ShowAlertBox(String content, String title) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text(title),
-            content: Text(content),
-            actions: [
-              TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text(
-                    "Ok",
-                    style: mTextStyle16(),
-                  ))
-            ],
-          );
-        });
   }
 }

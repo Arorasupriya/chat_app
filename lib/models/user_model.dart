@@ -1,11 +1,22 @@
 class UserModel {
   String? id;
-  String? name;
-  String? email;
-  String? mobileNumber;
-  String? city;
+  String name;
+  String email;
+  String mobileNumber;
+  String city;
+  String profilePic;
+  bool isActive;
+  bool isOnline;
 
-  UserModel({this.name, this.email, this.id, this.city, this.mobileNumber});
+  UserModel(
+      {required this.name,
+      required this.email,
+      this.id,
+      required this.city,
+      required this.mobileNumber,
+      this.isActive = true,
+      this.isOnline = false,
+      this.profilePic = ""});
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
@@ -14,6 +25,9 @@ class UserModel {
       id: json["id"],
       mobileNumber: json["mobileNumber"],
       city: json["city"],
+      isActive: json["isActive"],
+      isOnline: json["isOnline"],
+      profilePic: json["profilePic"],
     );
   }
 
@@ -23,7 +37,10 @@ class UserModel {
       "email": email,
       "id": id,
       "city": city,
-      "mobileNumber": mobileNumber
+      "mobileNumber": mobileNumber,
+      "isActive": isActive,
+      "isOnline": isOnline,
+      "profilePic": profilePic
     };
   }
 }

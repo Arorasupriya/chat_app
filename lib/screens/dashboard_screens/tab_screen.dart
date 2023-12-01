@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fb_chat_app/constants/app_colors.dart';
 import 'package:fb_chat_app/constants/global_methods_and_variables.dart';
 import 'package:fb_chat_app/constants/my_text_styles.dart';
+import 'package:fb_chat_app/firebase/firebase_constant.dart';
+import 'package:fb_chat_app/models/user_model.dart';
 import 'package:fb_chat_app/screens/dashboard_screens/call.dart';
 import 'package:fb_chat_app/screens/dashboard_screens/dashboard.dart';
 import 'package:fb_chat_app/screens/dashboard_screens/map_screen.dart';
@@ -15,9 +18,9 @@ import 'package:flutter/material.dart';
 enum Item { itemOne, itemTwo, itemThree, itemFour, itemFive }
 
 class MyTabView extends StatefulWidget {
-  String? getUid;
-
-  MyTabView({super.key, this.getUid});
+  MyTabView({
+    super.key,
+  });
 
   @override
   State<MyTabView> createState() => _MyTabViewState();
@@ -27,6 +30,7 @@ class _MyTabViewState extends State<MyTabView> {
   var txtSearchController = TextEditingController();
   bool isSearching = false;
   Item? selectedMenu;
+  FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
   void gotoSettingsScreen() {
     Navigator.push(context,
@@ -43,6 +47,7 @@ class _MyTabViewState extends State<MyTabView> {
     var userId = "";
     setUserDataInSP(isLoggedIn, userId);
     await FirebaseAuth.instance.signOut();
+
     print("u are successfully logout");
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => SignInScreen()));
@@ -87,6 +92,7 @@ class _MyTabViewState extends State<MyTabView> {
                   color: Colors.white,
                 )),
             PopupMenuButton(
+                iconColor: Colors.white,
                 color: ColorConstant.tabSelectedColor,
                 itemBuilder: (BuildContext context) => <PopupMenuEntry<Item>>[
                       PopupMenuItem<Item>(
@@ -174,11 +180,7 @@ class _MyTabViewState extends State<MyTabView> {
         ),
         body: TabBarView(
           ///i pass screens in TabBarView
-          children: [
-            Dashboard(getUserId: widget.getUid),
-            const StatusScreen(),
-            const CallScreen()
-          ],
+          children: [Dashboard(), const StatusScreen(), const CallScreen()],
         ),
       ),
     );
@@ -242,10 +244,8 @@ class CustomSearchDelegate extends SearchDelegate {
           var result = matchQuery[index];
           return InkWell(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const ChatDetailScreen()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ChatDetailScreen()));
             },
             child: ListTile(
               title: Text(

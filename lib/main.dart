@@ -8,6 +8,7 @@
 //region ImportsHeaderFile
 import 'package:fb_chat_app/constants/app_colors.dart';
 import 'package:fb_chat_app/firebase_options.dart';
+import 'package:fb_chat_app/screens/detail_screens/set_profile_image.dart';
 import 'package:fb_chat_app/screens/onboarding_screens/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +44,6 @@ class _MyAppState extends State<MyApp> {
           //primarySwatch: Colors.cyan,
           useMaterial3: true,
         ),
-        home: const SplashScreen()); //const SplashScreen()
+        home: const SplashScreen()); // const SetImage()
   }
 }

@@ -31,6 +31,8 @@ class Assets {
       'lib/screens/dashboard_screens/tab_screen.dart';
   static const String detailScreensCallDetailScreen =
       'lib/screens/detail_screens/call_detail_screen.dart';
+  static const String detailScreensChatBubbleUi =
+      'lib/screens/detail_screens/chat_bubble_ui.dart';
   static const String detailScreensChatDetailScreen =
       'lib/screens/detail_screens/chat_detail_screen.dart';
   static const String detailScreensEditProfileScreen =
@@ -39,8 +41,12 @@ class Assets {
       'lib/screens/detail_screens/profile_screen.dart';
   static const String detailScreensRazorpayScreen =
       'lib/screens/detail_screens/razorpay_screen.dart';
+  static const String detailScreensSetProfileImage =
+      'lib/screens/detail_screens/set_profile_image.dart';
   static const String detailScreensStatusDetailScreen =
       'lib/screens/detail_screens/status_detail_screen.dart';
+  static const String firebaseFirebaseConstant =
+      'lib/firebase/firebase_constant.dart';
   static const String generatedAssets = 'lib/generated/assets.dart';
   static const String iconsIcAddChat = 'assets/icons/ic_add_chat.png';
   static const String iconsIcCamera = 'assets/icons/ic_camera.png';

@@ -35,9 +35,7 @@ class _SplashScreenState extends State<SplashScreen>
     print("get SP data in Splash $signInStatus,$getUserId");
     if (signInStatus) {
       Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => MyTabView(getUid: getUserId)));
+          context, MaterialPageRoute(builder: (context) => MyTabView()));
     } else {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => SignUpScreen()));
