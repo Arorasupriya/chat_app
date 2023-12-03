@@ -8,6 +8,7 @@ import 'package:fb_chat_app/constants/my_text_styles.dart';
 import 'package:fb_chat_app/firebase/firebase_constant.dart';
 import 'package:fb_chat_app/models/message_model.dart';
 import 'package:fb_chat_app/screens/detail_screens/chat_bubble_ui.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -363,8 +364,10 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                               fixedSize: const Size(50, 50),
                               shape: const CircleBorder()),
                           onPressed: () {
-                            FirebaseConstant.sendMsg(
-                                txtMessageBox.text.toString(), widget.toId);
+                            takeImage != null
+                                ? saveImageInFirebaseStorage()
+                                : FirebaseConstant.sendMsg(
+                                    txtMessageBox.text.toString(), widget.toId);
                             txtMessageBox.clear();
                             scrollToBottom();
                             FocusScope.of(context).unfocus();
@@ -410,6 +413,30 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
       });
     } on PlatformException catch (e) {
       print("Failed to Pick Image: $e");
+    }
+  }
+
+  saveImageInFirebaseStorage() {
+    FirebaseStorage firebaseStorage = FirebaseStorage.instance;
+    if (takeImage != null) {
+      var currentTime = DateTime.now().millisecondsSinceEpoch;
+      var ref = firebaseStorage
+          .ref()
+          .child("images/send_images/img_$currentTime.jpg");
+      try {
+        ref.putFile(takeImage!).then((p0) async {
+          print("image uploaded send image");
+
+          var downloadImageUrl = await p0.ref.getDownloadURL();
+          print("downloadImageUrl send image===> $downloadImageUrl");
+
+          FirebaseConstant.sendImage(downloadImageUrl, widget.toId);
+        });
+      } catch (e) {
+        print("Error===> ${e.toString()}");
+      }
+      //get values how much file uploaded use below line
+      //ref.putFile(takeImage!).asStream().listen((event) { });
     }
   }
 

@@ -34,16 +34,23 @@ class ChatBubbleUIState extends State<ChatBubbleUI> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Container(
-                margin: const EdgeInsets.all(11),
-                padding: const EdgeInsets.all(11),
-                decoration: BoxDecoration(
-                    color: Colors.amber.shade100,
-                    borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(21),
-                        topRight: Radius.circular(21),
-                        bottomLeft: Radius.circular(21))),
-                child: Text(widget.msg.message),
-              ),
+                  margin: const EdgeInsets.all(11),
+                  padding: const EdgeInsets.all(11),
+                  decoration: BoxDecoration(
+                      color: Colors.amber.shade100,
+                      borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(21),
+                          topRight: Radius.circular(21),
+                          bottomLeft: Radius.circular(21))),
+                  child: widget.msg.msgType == "text"
+                      ? Text(widget.msg.message)
+                      : Image.network(
+                          widget.msg.message,
+                          width: 100,
+                          height: 100,
+                          filterQuality: FilterQuality.high,
+                          fit: BoxFit.fill,
+                        )),
               /* if (widget.msg.msgType == "image")
                 Container(
                     margin: const EdgeInsets.all(11),
@@ -107,16 +114,23 @@ class ChatBubbleUIState extends State<ChatBubbleUI> {
       children: [
         Flexible(
             child: Container(
-          margin: const EdgeInsets.all(11),
-          padding: const EdgeInsets.all(11),
-          decoration: BoxDecoration(
-              color: Colors.blue.shade100,
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(21),
-                  topRight: Radius.circular(21),
-                  bottomRight: Radius.circular(21))),
-          child: Text(widget.msg.message),
-        )),
+                margin: const EdgeInsets.all(11),
+                padding: const EdgeInsets.all(11),
+                decoration: BoxDecoration(
+                    color: Colors.blue.shade100,
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(21),
+                        topRight: Radius.circular(21),
+                        bottomRight: Radius.circular(21))),
+                child: widget.msg.msgType == "text"
+                    ? Text(widget.msg.message)
+                    : Image.network(
+                        widget.msg.message,
+                        width: 100,
+                        height: 100,
+                        filterQuality: FilterQuality.high,
+                        fit: BoxFit.fill,
+                      ))),
         Padding(
           padding: const EdgeInsets.only(right: 8.0),
           child: Text('${sentTime.format(context)}'),

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fb_chat_app/constants/global_methods_and_variables.dart';
 import 'package:fb_chat_app/constants/my_text_styles.dart';
@@ -178,6 +176,7 @@ class FirebaseConstant {
         .set(message.toJson());
   }
 
+  //sendImage
   static void sendImage(String image, String toId) {
     var chatId = getChatId(firebaseAuth.currentUser!.uid, toId);
     print("Chat ID ===> $chatId");
@@ -197,9 +196,11 @@ class FirebaseConstant {
         .doc(chatId)
         .collection("message")
         .doc(sentTime.toString())
-        .set(message.toJson());
+        .set(message.toJson())
+        .then((value) => print("value store in collection"));
   }
 
+  //getAllMessages
   static Stream<QuerySnapshot<Map<String, dynamic>>> getAllMessage(
       String toId) {
     var chatId = getChatId(firebaseAuth.currentUser!.uid, toId);
@@ -210,6 +211,7 @@ class FirebaseConstant {
         .snapshots();
   }
 
+  //updateReadtime
   static void updateReadTime(String mId, String fromId) {
     var chatId = getChatId(firebaseAuth.currentUser!.uid, fromId);
     print("chat id ===> ${firebaseAuth.currentUser!.uid}${fromId}");
@@ -223,6 +225,38 @@ class FirebaseConstant {
         .collection("message")
         .doc(mId)
         .update({"read": readTime.toString()});
+  }
+
+  //lastMsgRead
+  static Stream<QuerySnapshot<Map<String, dynamic>>> lastMsgRead(
+      String userChatId) {
+    var chatId = getChatId(CURRENT_USER_ID, userChatId);
+    return firebaseFirestore
+        .collection(CHATROOM_COLLECTION)
+        .doc(chatId)
+        .collection("message")
+        .orderBy("sent", descending: true)
+        .limit(1)
+        .snapshots();
+  }
+
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getUnReadCount(
+      String chatUserId) {
+    var chatId = getChatId(CURRENT_USER_ID, chatUserId);
+
+    return firebaseFirestore
+        .collection(CHATROOM_COLLECTION)
+        .doc(chatId)
+        .collection("message")
+        .where("fromId", isEqualTo: chatUserId)
+        .where("read", isEqualTo: "")
+        .snapshots();
+  }
+
+  static TimeOfDay convertDateTimeToFormat(String sentTIme) {
+    TimeOfDay getSentTime = TimeOfDay.fromDateTime(
+        DateTime.fromMillisecondsSinceEpoch(int.parse(sentTIme)));
+    return getSentTime;
   }
 } //class
 
